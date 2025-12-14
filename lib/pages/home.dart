@@ -15,7 +15,7 @@ class _HomeState extends State<Home> {
         padding: EdgeInsets.only(top: 60.0,left: 30.0),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFB9375D),Color(0xFFD25D5D),Color(0xFFD25D5D), Color(0xFFC9CDCF),Color(0xFFC9CDCF), Color(0xFFEEEEEE)],begin: Alignment.topCenter,end: Alignment.bottomCenter),),
+        decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFF5A0E24),Color(0xFF76153C),Color(0xFFBF124D),Color(0xFFFFF2C6),Color(0xFFFFF2C6)],begin: Alignment.topCenter,end: Alignment.bottomCenter),),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
