@@ -8,9 +8,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool today = true, tomorrow=false, nextweek=false;
+  bool suggest = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(backgroundColor:Color(0xFF5A0E24),onPressed:(){
+
+    },
+      child: Icon(Icons.add,color: Color(0xFFFFF2C6),size: 40.0,),
+      ),
       body: Container(
         padding: EdgeInsets.only(top: 60.0,left: 30.0),
         height: MediaQuery.of(context).size.height,
@@ -28,15 +34,15 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 today? Material(
-                  elevation: 5.0,
+                  elevation: 12.0,
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
-                  decoration: BoxDecoration(color: Color(0xFF1A2A4F),borderRadius: BorderRadius.circular(20)),
+                  decoration: BoxDecoration(color: Color(0xFFFFF2C6),borderRadius: BorderRadius.circular(20)),
                 padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 5.0),
                 child:
                 Text("Today",
                   style: TextStyle(fontFamily: 'Times New Roman',
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 22.0,
                       fontWeight: FontWeight.w600),
                 )
@@ -59,15 +65,15 @@ class _HomeState extends State<Home> {
                 ),
 
                 tomorrow? Material(
-                  elevation: 5.0,
+                  elevation: 12.0,
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
-                      decoration: BoxDecoration(color: Color(0xFF1A2A4F),borderRadius: BorderRadius.circular(20)),
+                      decoration: BoxDecoration(color: Color(0xFFFFF2C6),borderRadius: BorderRadius.circular(20)),
                       padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 5.0),
                       child:
                       Text("Tomorrow",
                         style: TextStyle(fontFamily: 'Times New Roman',
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 22.0,
                             fontWeight: FontWeight.w600),
                       )
@@ -90,15 +96,15 @@ class _HomeState extends State<Home> {
                 ),
 
                 nextweek? Material(
-                  elevation: 5.0,
+                  elevation: 12.0,
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
-                      decoration: BoxDecoration(color: Color(0xFF1A2A4F),borderRadius: BorderRadius.circular(20)),
+                      decoration: BoxDecoration(color: Color(0xFFFFF2C6),borderRadius: BorderRadius.circular(20)),
                       padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 5.0),
                       child:
                       Text("Next Week",
                         style: TextStyle(fontFamily: 'Times New Roman',
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 22.0,
                             fontWeight: FontWeight.w600),
                       )
@@ -121,6 +127,17 @@ class _HomeState extends State<Home> {
                 ),
               ],
 
+            ),
+            SizedBox(height: 70),
+            CheckboxListTile(
+              activeColor: Colors.green,
+              title: Text("Go to the Gym",style: TextStyle(fontSize: 22.0,color: Colors.white,fontWeight: FontWeight.w900),),
+              value: suggest, onChanged: (newValue){
+              setState(() {
+                suggest=newValue!;
+              });
+            },
+              controlAffinity: ListTileControlAffinity.leading,
             )
       ],),),
     );
