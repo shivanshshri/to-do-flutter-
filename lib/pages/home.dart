@@ -9,11 +9,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool today = true, tomorrow=false, nextweek=false;
   bool suggest = false;
+  TextEditingController todocontroller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(backgroundColor:Color(0xFF5A0E24),onPressed:(){
-
+      floatingActionButton: FloatingActionButton(backgroundColor:Color(0xFF5A0E24),
+        onPressed:(){
+            openBox();
     },
       child: Icon(Icons.add,color: Color(0xFFFFF2C6),size: 40.0,),
       ),
@@ -142,4 +144,53 @@ class _HomeState extends State<Home> {
       ],),),
     );
   }
+  Future openBox()=> showDialog(context: context, builder: (context)=> AlertDialog(
+    content: SingleChildScrollView(
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                GestureDetector(
+                  onTap:(){
+                    Navigator.pop(context);
+                  },child: Icon(Icons.cancel)),
+
+              SizedBox(width: 50.0,),
+              Text("Add the work ToDo",style: TextStyle(color:Color(0xFF5A0E24),fontWeight: FontWeight.w900,fontSize: 15.0),),
+
+      ],
+            ),
+            SizedBox(height: 20.0),
+            Text("Add Work",style: TextStyle(fontWeight: FontWeight.w900),),
+            SizedBox(height: 10.0,),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Color(0xFF5A0E24),
+                  width: 2.0,
+                ),borderRadius: BorderRadius.circular(10),
+              ),child: TextField(
+              controller: todocontroller,
+              decoration: InputDecoration(
+                border: InputBorder.none,hint: Text("Enter Task")
+              ),
+            ),
+            ),
+            SizedBox(height: 20.0,),
+            Center(
+              child: Container(
+                padding: EdgeInsets.all(5),
+                width: 70.0,
+                decoration: BoxDecoration(color: Color(0xFF5A0E24),borderRadius: BorderRadius.circular(10)),
+                child: Center(child: Text("ADD",style: TextStyle(color: Color(0xFFFFF2C6),fontWeight: FontWeight.w900),)),
+              ),
+            )
+          ],
+        ),
+      ),
+    ),
+  ));
 }
