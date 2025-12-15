@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
         padding: EdgeInsets.only(top: 60.0,left: 30.0),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFF5A0E24),Color(0xFF76153C),Color(0xFFBF124D),Color(0xFFFFF2C6),Color(0xFFFFF2C6)],begin: Alignment.topCenter,end: Alignment.bottomCenter),),
+        decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFF5A0E24),Color(0xFF76153C),Color(0xFFBF124D),Color(0xFFFFF2C6),Color(0xFFFFF2C6)],begin: Alignment.topLeft,end: Alignment.bottomRight),),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
