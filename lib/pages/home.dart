@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:to_do/services/database.dart';
+import 'package:random_string/random_string.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -180,12 +183,27 @@ class _HomeState extends State<Home> {
             ),
             ),
             SizedBox(height: 20.0,),
-            Center(
-              child: Container(
-                padding: EdgeInsets.all(5),
-                width: 70.0,
-                decoration: BoxDecoration(color: Color(0xFF5A0E24),borderRadius: BorderRadius.circular(10)),
-                child: Center(child: Text("ADD",style: TextStyle(color: Color(0xFFFFF2C6),fontWeight: FontWeight.w900),)),
+            GestureDetector(
+              onTap: (){
+                String id = randomAlphaNumeric(10);
+                Map<String,dynamic> userTodo={
+                  "Work":todocontroller.text,
+                  "Id": id,
+                };
+                today
+                    ? DatabaseMethods().addTodayWork(userTodo, id):
+                tomorrow
+                    ? DatabaseMethods().addTomorrowWork(userTodo, id):
+                      DatabaseMethods().addNextWeekWork(userTodo, id);
+                Navigator.pop(context);
+              },
+              child: Center(
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  width: 70.0,
+                  decoration: BoxDecoration(color: Color(0xFF5A0E24),borderRadius: BorderRadius.circular(10)),
+                  child: Center(child: Text("ADD",style: TextStyle(color: Color(0xFFFFF2C6),fontWeight: FontWeight.w900),)),
+                ),
               ),
             )
           ],
