@@ -14,7 +14,8 @@ class DatabaseMethods {
   Future addTomorrowWork(Map<String,dynamic> userTomorrowMap, String id) async {
     return await FirebaseFirestore.instance
         .collection("tomorrow")
-        .doc(id);
+        .doc(id)
+        .set(userTomorrowMap);
 
   }
 
@@ -36,7 +37,7 @@ class DatabaseMethods {
     return await FirebaseFirestore.instance
         .collection(day)
         .doc(id)
-        .update({"yes": true});
+        .update({"Yes": true});
   }
 }
 

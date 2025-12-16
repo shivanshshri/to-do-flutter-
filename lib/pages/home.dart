@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:to_do/services/database.dart';
 import 'package:random_string/random_string.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,6 +14,39 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool today = true, tomorrow=false, nextweek=false;
   bool suggest = false;
+  Stream?todoStream;
+
+  getontheload()async{
+    todoStream = await DatabaseMethods().getAllTheWork(today?"today":tomorrow?"tomorrow":"nextweek");
+    setState(() {
+
+    });
+  }
+  @override
+  void initState() {
+   getontheload();
+    super.initState();
+  }
+
+  Widget allWork(){
+    return StreamBuilder(stream: todoStream, builder: (context,AsyncSnapshot snapshot){
+return snapshot.hasData? ListView.builder(itemCount: snapshot.data.docs.length, itemBuilder: (context,index){
+  DocumentSnapshot ds = snapshot.data.docs[index];
+  return  CheckboxListTile(
+    activeColor: Colors.green,
+    title: Text(ds["Work"],style: TextStyle(fontSize: 22.0,color: Color(0xFFF8F8FF),fontWeight: FontWeight.w600,fontFamily: 'Times New Roman'),),
+    value: ds["Yes"],
+    onChanged: (newValue)async{
+      await DatabaseMethods().updateIfTicked(ds["Id"], today?"today":tomorrow?"tomorrow":"nextweek");
+    setState(() {
+
+    });
+  },
+    controlAffinity: ListTileControlAffinity.leading,
+  );
+}):CircularProgressIndicator();
+    });
+  }
   TextEditingController todocontroller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -53,10 +88,11 @@ class _HomeState extends State<Home> {
                 )
                 ),
                 ):GestureDetector(
-                  onTap:(){
+                  onTap:() async{
                     today=true;
                     tomorrow=false;
                     nextweek=false;
+                    await getontheload();
                     setState(() {
 
                     });
@@ -84,10 +120,11 @@ class _HomeState extends State<Home> {
                       )
                   ),
                 ):GestureDetector(
-                    onTap:(){
+                    onTap:() async{
                       today=false;
                       tomorrow=true;
                       nextweek=false;
+                       await getontheload();
                       setState(() {
 
                       });
@@ -115,10 +152,11 @@ class _HomeState extends State<Home> {
                       )
                   ),
                 ):GestureDetector(
-                    onTap:(){
+                    onTap:()async{
                       today=false;
                       tomorrow=false;
                       nextweek=true;
+                       await getontheload();
                       setState(() {
 
                       });
@@ -134,16 +172,10 @@ class _HomeState extends State<Home> {
 
             ),
             SizedBox(height: 70),
-            CheckboxListTile(
-              activeColor: Colors.green,
-              title: Text("Go to the Gym",style: TextStyle(fontSize: 22.0,color: Colors.white,fontWeight: FontWeight.w900),),
-              value: suggest, onChanged: (newValue){
-              setState(() {
-                suggest=newValue!;
-              });
-            },
-              controlAffinity: ListTileControlAffinity.leading,
-            )
+            Expanded(
+              child: allWork(),
+            ),
+
       ],),),
     );
   }
@@ -189,6 +221,7 @@ class _HomeState extends State<Home> {
                 Map<String,dynamic> userTodo={
                   "Work":todocontroller.text,
                   "Id": id,
+                  "Yes":false,
                 };
                 today
                     ? DatabaseMethods().addTodayWork(userTodo, id):
